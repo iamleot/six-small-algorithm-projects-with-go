@@ -1,0 +1,43 @@
+version: '3'
+
+tasks:
+  build:
+    desc: Build Go module.
+    summary: |
+      Build Go module
+
+      Build all Go code via `go build`.
+    dir: '{{.USER_WORKING_DIR}}'
+    cmds:
+      - go build -v ./...
+
+  check-fmt:
+    desc: Check Go code formatting.
+    summary: |
+      Check Go code formatting
+
+      Chek Go code formatting and exit with non-0 exit status if the code
+      is not formatted.
+    dir: '{{.USER_WORKING_DIR}}'
+    cmds:
+      - gofmt -l . | awk '{ print } END { exit(NR > 0) }'
+
+  fmt:
+    desc: Format Go code.
+    summary: |
+      Format Go code
+
+      Recursively run `go fmt` to format Go code.
+    dir: '{{.USER_WORKING_DIR}}'
+    cmds:
+      - go fmt ./...
+
+  test:
+    desc: Test Go code.
+    summary: |
+      Test Go code
+
+      Run tests for the Go code and benchmark them.
+    dir: '{{.USER_WORKING_DIR}}'
+    cmds:
+      - go test -v -bench -benchmem ./...
