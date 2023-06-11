@@ -1,0 +1,54 @@
+name: Check, build and test Go code
+
+'on':
+  push:
+    branches:
+      - main
+  pull_request:
+
+env:
+  TASK_VERSION: "3.26.0"
+
+jobs:
+  go:
+    name: Check, build and test Go code
+    runs-on: 'ubuntu-latest'
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+      - name: Setup Go
+        uses: actions/setup-go@v3
+        with:
+          go-version: '1.20'
+      - name: Install Task
+        run: |
+          mkdir -p "${HOME}/.local/bin"
+          curl -sL "https://github.com/go-task/task/releases/download/v${TASK_VERSION}/task_linux_amd64.tar.gz" | tar xzf - -C "${HOME}/.local/bin" task
+      - name: Check formatting
+        run: |
+          for d in */*; do
+            echo "::group::Checking formatting for ${d}"
+            cd "$d"
+            task check-fmt
+            cd ../..
+            echo "::endgroup::"
+          done
+      - name: Build code
+        run: |
+          for d in */*; do
+            echo "::group::Building code for ${d}"
+            cd "$d"
+            task build
+            cd ../..
+            echo "::endgroup::"
+          done
+      - name: Test code
+        run: |
+          for d in */*; do
+            echo "::group::Testing code for ${d}"
+            cd "$d"
+            task test
+            cd ../..
+            echo "::endgroup::"
+          done
