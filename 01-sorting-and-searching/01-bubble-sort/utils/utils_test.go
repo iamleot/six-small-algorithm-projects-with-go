@@ -116,3 +116,66 @@ func TestSprintArray(t *testing.T) {
 		})
 	}
 }
+
+func TestCheckSorted(t *testing.T) {
+	CheckSorted([]int{})
+	// Output:
+	// The array is sorted
+
+	CheckSorted([]int{0})
+	// Output:
+	// The array is sorted
+
+	CheckSorted([]int{0, 1, 2})
+	// Output:
+	// The array is sorted
+
+	CheckSorted([]int{0, 0, 0})
+	// Output:
+	// The array is sorted
+
+	CheckSorted([]int{1, 2, 1})
+	// Output:
+	// The array is NOT sorted!
+}
+
+func TestSorted(t *testing.T) {
+	type testCase struct {
+		array  []int
+		sorted bool
+	}
+
+	var tests = map[string]testCase{
+		"zero elements array, sorted": {
+			array:  []int{},
+			sorted: true,
+		},
+		"one element array, sorted": {
+			array:  []int{1},
+			sorted: true,
+		},
+		"five elements array (all increasing), sorted": {
+			array:  []int{1, 3, 5, 8, 10},
+			sorted: true,
+		},
+		"five elements array (some increasing, some the same), sorted": {
+			array:  []int{0, 0, 1, 2, 3},
+			sorted: true,
+		},
+		"five elements array, not sorted": {
+			array:  []int{0, 1, 2, 3, 0},
+			sorted: false,
+		},
+	}
+
+	for name, tc := range tests {
+		t.Run(name, func(t *testing.T) {
+			sorted := isSorted(tc.array)
+
+			if sorted != tc.sorted {
+				t.Errorf("expected: %t, got: %t for array %q",
+					tc.sorted, sorted, tc.array)
+			}
+		})
+	}
+}
