@@ -33,3 +33,24 @@ func sprintArray(array []int, numItems int) string {
 
 	return fmt.Sprint(array[:numItems])
 }
+
+// CheckSorted print if an array is sorted or not.
+func CheckSorted(array []int) {
+	if isSorted(array) {
+		fmt.Sprintln("The array is sorted")
+	} else {
+		fmt.Sprintln("The array is NOT sorted!")
+	}
+}
+
+// isSorted returns true if the array is sorted, false otherwise.
+//
+// Only intended to make actual functionality of CheckSorted() testable.
+func isSorted(array []int) bool {
+	for i := 1; i < len(array); i++ {
+		if array[i-1] > array[i] {
+			return false
+		}
+	}
+	return true
+}
