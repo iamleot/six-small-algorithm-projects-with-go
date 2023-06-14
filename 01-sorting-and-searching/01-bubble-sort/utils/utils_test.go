@@ -170,7 +170,7 @@ func TestSorted(t *testing.T) {
 
 	for name, tc := range tests {
 		t.Run(name, func(t *testing.T) {
-			sorted := isSorted(tc.array)
+			sorted := IsSorted(tc.array)
 
 			if sorted != tc.sorted {
 				t.Errorf("expected: %t, got: %t for array %q",
