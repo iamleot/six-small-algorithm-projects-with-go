@@ -52,3 +52,12 @@ jobs:
             cd ../..
             echo "::endgroup::"
           done
+      - name: Check code covegare
+        run: |
+          for d in */*; do
+            echo "::group::Checking code coverage for ${d}"
+            cd "$d"
+            task coverage
+            cd ../..
+            echo "::endgroup::"
+          done
