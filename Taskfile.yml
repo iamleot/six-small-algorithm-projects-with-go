@@ -22,6 +22,19 @@ tasks:
     cmds:
       - gofmt -l . | awk '{ print } END { exit(NR > 0) }'
 
+  coverage:
+    desc: Check Go code coverage.
+    summary: |
+      Check Go code coverage
+
+      Test the Go code enabling coverage analysis, generates a coverprofile as
+      `cover.out` and check that the total coverage of the code is >=80%.
+    dir: '{{.USER_WORKING_DIR}}'
+    cmds:
+      - go test -v -cover -coverprofile cover.out ./...
+      - "go tool cover -func=cover.out | awk -v acceptable=80 '/^total:/ { coverage = $NF } END { print \"Total coverage: \" coverage; if (coverage + 0 >= acceptable) { exit 0 } exit 1 }'"
+
+
   fmt:
     desc: Format Go code.
     summary: |
