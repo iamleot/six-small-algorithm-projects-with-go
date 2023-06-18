@@ -173,7 +173,7 @@ func TestSorted(t *testing.T) {
 			sorted := IsSorted(tc.array)
 
 			if sorted != tc.sorted {
-				t.Errorf("expected: %t, got: %t for array %q",
+				t.Errorf("expected: %t, got: %t for array %v",
 					tc.sorted, sorted, tc.array)
 			}
 		})
