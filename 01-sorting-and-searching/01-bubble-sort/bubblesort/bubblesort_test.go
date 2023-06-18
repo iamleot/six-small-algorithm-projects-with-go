@@ -33,7 +33,7 @@ func TestBubbleSort(t *testing.T) {
 			BubbleSort(tc.array)
 
 			if !utils.IsSorted(tc.array) {
-				t.Errorf("got: %q, not sorted", tc.array)
+				t.Errorf("got: %v, not sorted", tc.array)
 			}
 		})
 	}
