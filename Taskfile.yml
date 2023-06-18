@@ -34,7 +34,6 @@ tasks:
       - go test -v -cover -coverprofile cover.out ./...
       - "go tool cover -func=cover.out | awk -v acceptable=80 '/^total:/ { coverage = $NF } END { print \"Total coverage: \" coverage; if (coverage + 0 >= acceptable) { exit 0 } exit 1 }'"
 
-
   fmt:
     desc: Format Go code.
     summary: |
